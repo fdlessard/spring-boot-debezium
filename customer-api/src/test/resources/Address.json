@@ -1,0 +1,8 @@
+{
+  "number": "number",
+  "street": "street",
+  "city": "city",
+  "postalCode" : "postalCode",
+  "province" : "province",
+  "country" : "country"
+}

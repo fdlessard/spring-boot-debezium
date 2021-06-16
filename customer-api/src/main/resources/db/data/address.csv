@@ -1,0 +1,3 @@
+number, street, city, postal_code, province, country, customer_id
+1,street-1,city-1,postal-code-1,province-1,country-1, 1
+1,street-2,city-2,postal-code-2,province-2,country-2, 1

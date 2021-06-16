@@ -1,0 +1,68 @@
+server:
+  port: 8081
+
+management:
+  info:
+    git:
+      mode: full
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+logging:
+  level.root: INFO
+  #  level.org.hibernate.SQL: DEBUG
+  level.liquibase: INFO
+  level.io.fdlessard.codebites.cloud.stream.processor: DEBUG
+
+spring:
+  application:
+    name: customer-processor-application
+  output:
+    ansi:
+      enabled: always
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  jackson:
+    default-property-inclusion: non_null
+    time-zone: UTC
+    serialization:
+      write_dates_as_timestamps: false
+  datasource:
+    url: jdbc:tc:postgresql:13:///
+    initialization-mode: always
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    hibernate:
+      ddl-auto: validate
+      use-new-id-generator-mappings: false
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+      jdbc:
+        time_zone: UTC
+    show-sql: true
+  liquibase:
+    enabled: on
+    drop-first: on
+    default-schema: public
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+  kafka:
+    bootstrap-servers: kafka-server:9092
+  cloud:
+    stream:
+      bindings:
+        receiveCustomer-in-0:
+          destination: customers
+          group: customerGroup
+          contentType: application/json
+        receiveAddress-in-0:
+          destination: addresses
+          group: addressGroup
+          contentType: application/json
+    function:
+      definition: receiveCustomer;receiveAddress

@@ -1,0 +1,70 @@
+server:
+  port: 8080
+
+management:
+  info:
+    git:
+      mode: full
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+logging:
+  level.root: INFO
+  level.liquibase: INFO
+  level.io.fdlessard.codebites.cloud.stream.api: DEBUG
+
+spring:
+  application:
+    name: customer-api-application
+  output:
+    ansi:
+      enabled: always
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  jackson:
+    default-property-inclusion: non_null
+    time-zone: UTC
+    serialization:
+      write_dates_as_timestamps: false
+  datasource:
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:secret}
+    platform: postgres
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
+    initialization-mode: never
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    hibernate:
+      ddl-auto: validate
+      use-new-id-generator-mappings: false
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+      jdbc:
+        time_zone: UTC
+    show-sql: true
+  liquibase:
+    enabled: on
+    drop-first: on
+    default-schema: public
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+  kafka:
+    bootstrap-servers: kafka-server:9092
+  cloud:
+    stream:
+      bindings:
+        customer-out-0:
+          contentType: application/json
+          destination: customers
+        address-out-0:
+          contentType: application/json
+          destination: addresses
+
+customer:
+  publishingActivated: false

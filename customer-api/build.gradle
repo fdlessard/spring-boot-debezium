@@ -1,0 +1,268 @@
+plugins {
+    id 'org.springframework.boot' version '2.4.6'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+    id 'idea'    // optional, for IntelliJ IDEA project
+    id 'jacoco'
+    id 'checkstyle'
+    id 'com.github.spotbugs' version '4.6.0'
+    id 'pmd'
+    id 'org.myire.quill.cpd' version '2.4'
+    id 'org.owasp.dependencycheck' version '6.1.2'
+    id "com.gorylenko.gradle-git-properties" version "2.2.4"
+}
+
+group = 'io.fdlessard.cotebites.debezium'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '15'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    integrationTestImplementation.extendsFrom testImplementation
+    integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
+    integrationTestAnnotationProcessor.extendsFrom testAnnotationProcessor
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    set('springCloudVersion', "2020.0.2")
+    set('testcontainersVersion', "1.15.3")
+
+    jacocoInstructionCoverageMinimum = 0.30
+    jacocoLineCoverageMinimum = 0.30
+    jacocoMethodCoverageMinimum = 0.30
+    jacocoClassCoverageMinimum = 0.30
+    jacocoBranchCoverageMinimum = 0.30
+    jacocoComplexityCoverageMinimum = 0.30
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.liquibase:liquibase-core'
+    implementation 'org.springframework.cloud:spring-cloud-stream'
+    implementation 'org.springframework.cloud:spring-cloud-stream-binder-kafka'
+    implementation 'org.apache.commons:commons-lang3:3.9'
+    implementation 'org.apache.commons:commons-collections4:4.4'
+    implementation 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'org.postgresql:postgresql'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.projectlombok:lombok'
+
+
+
+    testAnnotationProcessor 'org.projectlombok:lombok:'
+    testImplementation 'org.projectlombok:lombok'
+    testImplementation 'org.apache.commons:commons-lang3:3.9'
+    testImplementation 'nl.jqno.equalsverifier:equalsverifier:3.5.1'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    integrationTestAnnotationProcessor 'org.projectlombok:lombok'
+    integrationTestImplementation 'org.projectlombok:lombok'
+    integrationTestImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    integrationTestImplementation("org.springframework.cloud:spring-cloud-stream") {
+        artifact {
+            name = "spring-cloud-stream"
+            extension = "jar"
+            type ="test-jar"
+            classifier = "test-binder"
+        }
+    }
+    integrationTestImplementation 'org.testcontainers:junit-jupiter'
+    integrationTestImplementation 'org.testcontainers:kafka'
+    integrationTestImplementation 'org.testcontainers:postgresql'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.testcontainers:testcontainers-bom:${testcontainersVersion}"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+compileJava {
+    options.compilerArgs += ['-Xlint:all']
+    options.encoding = 'UTF-8'
+}
+
+compileTestJava {
+    options.compilerArgs += ['-Xlint:all']
+}
+
+checkstyle {
+    toolVersion checkstyleToolVersion
+    configFile = '../code-styles/google-checkstyle.xml' as File
+}
+
+spotbugs {
+    toolVersion = spotBugsToolVersion
+    ignoreFailures = true
+    effort = 'max'
+}
+
+jacoco {
+    toolVersion = jacocoToolVersion
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            enabled = true
+            element = 'BUNDLE'
+            excludes = ['*It.class', '*It.java']
+            limit {
+                counter = 'INSTRUCTION'
+                value = 'COVEREDRATIO'
+                minimum = jacocoInstructionCoverageMinimum
+            }
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = jacocoLineCoverageMinimum
+            }
+            limit {
+                counter = 'METHOD'
+                value = 'COVEREDRATIO'
+                minimum = jacocoMethodCoverageMinimum
+            }
+            limit {
+                counter = 'CLASS'
+                value = 'COVEREDRATIO'
+                minimum = jacocoClassCoverageMinimum
+            }
+            limit {
+                counter = 'BRANCH'
+                value = 'COVEREDRATIO'
+                minimum = jacocoBranchCoverageMinimum
+            }
+            limit {
+                counter = 'COMPLEXITY'
+                value = 'COVEREDRATIO'
+                minimum = jacocoComplexityCoverageMinimum
+            }
+        }
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled true
+        html.enabled = true
+    }
+}
+
+pmd {
+    toolVersion = pmdToolVersion
+    consoleOutput = true
+    ignoreFailures = true
+    pmdTest.enabled = false
+    incrementalAnalysis = true
+}
+
+pmdMain {
+    reports {
+        xml.enabled true
+        html.enabled true
+    }
+}
+
+cpd {
+    language = 'java'
+    minimumTokenCount = 100 // approximately 5-10 lines
+}
+
+dependencyCheck {
+    autoUpdate = true
+    failOnError = false
+    formats = ['XML', 'HTML']
+    analyzers {
+        assemblyEnabled = false
+    }
+    // bug ... outputDirectory not working now
+    //outputDirectory = "build/reports/dependency-check"
+}
+
+test {
+    useJUnitPlatform()
+    check.dependsOn jacocoTestCoverageVerification
+    finalizedBy jacocoTestReport
+    testLogging {
+        exceptionFormat = 'full'
+        showExceptions true
+        showCauses true
+        showStackTraces true
+        events 'passed', "skipped", 'failed', 'standardError', 'standardOut'
+    }
+    reports {
+        junitXml.enabled = true
+        junitXml.outputLocation = file("build/test-results/unitTest")
+        html.enabled = true
+        html.destination = file("build/reports/tests/unitTest")
+        binaryResultsDirectory = file("build/test-results/unitTest/binary")
+    }
+    jacoco {
+        enabled = true
+        ignoreFailures = false
+    }
+    afterSuite { desc, result ->
+        if (!desc.parent) {
+            println "\nUnit Test result: ${result.resultType}"
+            println "Test summary: ${result.testCount} tests, " +
+                    "${result.successfulTestCount} succeeded, " +
+                    "${result.failedTestCount} failed, " +
+                    "${result.skippedTestCount} skipped"
+        }
+    }
+}
+
+sourceSets {
+    integrationTest {
+        java.srcDir 'src/it/java'
+        resources.srcDir 'src/it/resources'
+        compileClasspath += sourceSets.main.output + sourceSets.test.output + sourceSets.test.compileClasspath
+        runtimeClasspath += sourceSets.integrationTest.output + sourceSets.integrationTest.compileClasspath  + sourceSets.test.runtimeClasspath
+
+    }
+}
+
+task integrationTest(type: Test) {
+    useJUnitPlatform()
+    description = 'Runs the integration tests.'
+    group = 'verification'
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    outputs.upToDateWhen { false }
+    mustRunAfter test
+    check.dependsOn integrationTest // if you only want unit test, comment
+    //dependsOn jar
+
+    testLogging {
+        exceptionFormat = 'full'
+        showExceptions true
+        showCauses true
+        showStackTraces true
+        events 'passed', "skipped", 'failed', 'standardError', 'standardOut'
+    }
+
+    afterSuite { desc, result ->
+        if (!desc.parent) {
+            println "\nIntegration Test result: ${result.resultType}"
+            println "Test summary: ${result.testCount} tests, " +
+                    "${result.successfulTestCount} succeeded, " +
+                    "${result.failedTestCount} failed, " +
+                    "${result.skippedTestCount} skipped"
+        }
+    }
+}

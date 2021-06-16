@@ -1,0 +1,3 @@
+rootProject.name = 'spring-boot-debezium'
+include 'customer-api'
+include 'customer-listener'

@@ -1,0 +1,52 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: francois-david.lessard@nbc.ca
+      changes:
+
+        - loadData:
+            tableName: customer
+            file: "db/data/customer.csv"
+            encoding: UTF-8
+            separator: ','
+            quotchar: "'"
+            columns:
+              - column:
+                  name: last_name
+                  type: string
+              - column:
+                  name: first_name
+                  type: string
+              - column:
+                  name: company
+                  type: string
+
+        - loadData:
+            tableName: address
+            file: "db/data/address.csv"
+            encoding: UTF-8
+            separator: ','
+            quotchar: "'"
+            columns:
+              - column:
+                  name: customer_id
+                  type: numeric
+              - column:
+                  name: number
+                  type: string
+              - column:
+                  name: street
+                  type: string
+              - column:
+                  name: city
+                  type: string
+              - column:
+                  name: province
+                  type: string
+              - column:
+                  name: postal_code
+                  type: string
+              - column:
+                  type: string
+
+
