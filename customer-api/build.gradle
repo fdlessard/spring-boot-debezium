@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.4.6'
+    id 'org.springframework.boot' version '2.5.1'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
     id 'idea'    // optional, for IntelliJ IDEA project
@@ -48,8 +48,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.liquibase:liquibase-core'
-    implementation 'org.springframework.cloud:spring-cloud-stream'
-    implementation 'org.springframework.cloud:spring-cloud-stream-binder-kafka'
     implementation 'org.apache.commons:commons-lang3:3.9'
     implementation 'org.apache.commons:commons-collections4:4.4'
     implementation 'org.projectlombok:lombok'
@@ -58,7 +56,6 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
-
 
 
     testAnnotationProcessor 'org.projectlombok:lombok:'
@@ -71,14 +68,6 @@ dependencies {
     integrationTestImplementation 'org.projectlombok:lombok'
     integrationTestImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    integrationTestImplementation("org.springframework.cloud:spring-cloud-stream") {
-        artifact {
-            name = "spring-cloud-stream"
-            extension = "jar"
-            type ="test-jar"
-            classifier = "test-binder"
-        }
-    }
     integrationTestImplementation 'org.testcontainers:junit-jupiter'
     integrationTestImplementation 'org.testcontainers:kafka'
     integrationTestImplementation 'org.testcontainers:postgresql'
