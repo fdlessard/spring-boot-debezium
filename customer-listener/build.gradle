@@ -12,7 +12,7 @@ plugins {
     id "com.gorylenko.gradle-git-properties" version "2.2.4"
 }
 
-group = 'io.fdlessard.cotebites.debezium'
+group = 'io.fdlessard.codebites.debezium'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '15'
 

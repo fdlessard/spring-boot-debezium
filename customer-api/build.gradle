@@ -2,7 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.5.1'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
-    id 'idea'    // optional, for IntelliJ IDEA project
+    id 'idea'
     id 'jacoco'
     id 'checkstyle'
     id 'com.github.spotbugs' version '4.6.0'
@@ -12,7 +12,7 @@ plugins {
     id "com.gorylenko.gradle-git-properties" version "2.2.4"
 }
 
-group = 'io.fdlessard.cotebites.debezium'
+group = 'io.fdlessard.codebites.debezium'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '15'
 
