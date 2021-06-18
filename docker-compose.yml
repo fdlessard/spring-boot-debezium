@@ -37,7 +37,7 @@ services:
     image: debezium/zookeeper:latest
     restart: unless-stopped
     container_name: customer-zookeeper
-    hostname: zookeeper
+    hostname: zookeeper-serer
     networks:
       - customer-net
     ports:
@@ -45,15 +45,15 @@ services:
       - 2888:2888
       - 3888:3888
     environment:
-      ZOO_MY_ID: '1'
-      ZOO_PORT: 2181
       ZOOKEEPER_CLIENT_PORT: 2181
-      ZOO_SERVERS: 'server.1:zookeeper:2888:3888'
       ALLOW_ANONYMOUS_LOGIN: 'yes'
+      ZOO_SERVERS: 'server.1:zookeeper:2888:3888'
+      ZOO_PORT: 2181
+      ZOO_MY_ID: '1'
   kafka-server:
     image: debezium/kafka:latest
     container_name: customer-kafka
-    hostname: kafka
+    hostname: kafka-server
     networks:
       - customer-net
     ports:
@@ -63,12 +63,13 @@ services:
       - zookeeper-server
     environment:
       KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper-server:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-server:9092,PLAINTEXT_HOST://localhost:9093
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_LISTENERS: PLAINTEXT://:9092,PLAINTEXT_HOST://:9093
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper-server:2181'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://kafka-server:9092,PLAINTEXT_HOST://localhost:9093'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT'
+      KAFKA_LISTENERS: 'PLAINTEXT://:9092,PLAINTEXT_HOST://:9093'
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       ALLOW_PLAINTEXT_LISTENER: 'yes'
+      ZOOKEEPER_CONNECT: 'zookeeper-server:2181'
 #      - 'LISTENERS=INTERNAL://:9092,EXTERNAL://:9093'
 #      - 'ADVERTISED_LISTENERS=INTERNAL://kafka:9092,EXTERNAL://localhost:9093'
 #      - 'KAFKA_INTER_BROKER_LISTENER_NAME=INTERNAL'
@@ -76,13 +77,10 @@ services:
 #      - 'ADVERTISED_HOST_NAME=localhost'
     depends_on:
       - zookeeper-server
-#    command: [--it]
   kafka-connect:
     image: debezium/connect:latest
     container_name: customer-kafka-connect
     hostname: connect
-    build:
-      context: .
     networks:
       - customer-net
     ports:
@@ -92,38 +90,22 @@ services:
       - zookeeper-server
       - kafka-server
     environment:
-      - GROUP_ID:1
-      - REST_PORT:8083
-      - REST_ADVERTISED_HOST_NAME:kafka-connect
-      - 'BOOTSTRAP_SERVERS=kafka-server:9092'
-      - CONFIG_STORAGE_TOPIC:my-connect-configs
-      - OFFSET_STORAGE_TOPIC:my-connect-offsets
-      - STATUS_STORAGE_TOPIC:my_source_connect_statuses
-      - 'KEY_CONVERTER=org.apache.kafka.connect.json.JsonConverter'
-      - 'VALUE_CONVERTER=org.apache.kafka.connect.json.JsonConverter'
-      - 'INTERNAL_KEY_CONVERTER=org.apache.kafka.connect.json.JsonConverter'
-      - 'INTERNAL_VALUE_CONVERTER=org.apache.kafka.connect.json.JsonConverter'
-      - CONFIG_STORAGE_REPLICATION_FACTOR:1
-      - OFFSET_STORAGE_REPLICATION_FACTOR:1
-      - STATUS_STORAGE_REPLICATION_FACTOR:1
+      GROUP_ID: 1
+      REST_PORT: 8083
+      REST_ADVERTISED_HOST_NAME: kafka-connect
+      BOOTSTRAP_SERVERS: 'kafka-server:9092'
+      CONFIG_STORAGE_TOPIC: my-connect-configs
+      OFFSET_STORAGE_TOPIC: my-connect-offsets
+      STATUS_STORAGE_TOPIC: my_source_connect_statuses
+      KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      INTERNAL_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      INTERNAL_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONFIG_STORAGE_REPLICATION_FACTOR: 1
+      OFFSET_STORAGE_REPLICATION_FACTOR: 1
+      STATUS_STORAGE_REPLICATION_FACTOR: 1
 #      - 'ADVERTISED_HOST_NAME=$$(echo $$DOCKER_HOST | cut -f3 -d’/’ | cut -f1 -d’:’)'
     depends_on:
       - postgres-server
       - zookeeper-server
       - kafka-server
-#    command: [--it]
-#  watcher:
-#    image: debezium/kafka:latest
-#    container_name: watcher
-#    hostname: watcher
-#    links:
-#      - zookeeper:zookeeper
-#      - kafka:kafka
-#    depends_on:
-#      - zookeeper
-#      - kafka
-#      - connect
-#    environment:
-#      - 'ZOOKEEPER_CONNECT=zookeeper:2181'
-#      - 'KAFKA_BROKER=kafka:9092'
-#    command: [watch-topic, -a, -k, postgres.crm.contact]
