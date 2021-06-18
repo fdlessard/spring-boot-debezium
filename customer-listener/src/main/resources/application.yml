@@ -14,11 +14,11 @@ logging:
   level.root: INFO
   #  level.org.hibernate.SQL: DEBUG
   level.liquibase: INFO
-  level.io.fdlessard.codebites.cloud.stream.processor: DEBUG
+  level.io.fdlessard.codebites.debezium: DEBUG
 
 spring:
   application:
-    name: customer-processor-application
+    name: customer-listener
   output:
     ansi:
       enabled: always
@@ -31,37 +31,14 @@ spring:
     time-zone: UTC
     serialization:
       write_dates_as_timestamps: false
-  datasource:
-    username: ${POSTGRES_USER:postgres}
-    password: ${POSTGRES_PASSWORD:secret}
-    platform: postgres
-    driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/postgres
-    initialization-mode: never
-  jpa:
-    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
-    hibernate:
-      ddl-auto: validate
-      use-new-id-generator-mappings: false
-    properties:
-      hibernate:
-        show_sql: true
-        format_sql: true
-      jdbc:
-        time_zone: UTC
-    show-sql: true
   kafka:
     bootstrap-servers: kafka-server:9092
   cloud:
     stream:
       bindings:
         receiveCustomer-in-0:
-          destination: customers
-          group: customerGroup
-          contentType: application/json
-        receiveAddress-in-0:
-          destination: addresses
-          group: addressGroup
+          destination: my-connect-configs
+          group: cdcGroup
           contentType: application/json
     function:
-      definition: receiveCustomer;receiveAddress
+      definition: receiveCustomer

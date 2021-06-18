@@ -31,38 +31,38 @@ spring:
     time-zone: UTC
     serialization:
       write_dates_as_timestamps: false
-  datasource:
-    url: jdbc:tc:postgresql:13:///
-    initialization-mode: always
-  jpa:
-    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
-    hibernate:
-      ddl-auto: validate
-      use-new-id-generator-mappings: false
-    properties:
-      hibernate:
-        show_sql: true
-        format_sql: true
-      jdbc:
-        time_zone: UTC
-    show-sql: true
-  liquibase:
-    enabled: on
-    drop-first: on
-    default-schema: public
-    change-log: classpath:/db/changelog/db.changelog-master.yaml
-  kafka:
-    bootstrap-servers: kafka-server:9092
-  cloud:
-    stream:
-      bindings:
-        receiveCustomer-in-0:
-          destination: customers
-          group: customerGroup
-          contentType: application/json
-        receiveAddress-in-0:
-          destination: addresses
-          group: addressGroup
-          contentType: application/json
-    function:
-      definition: receiveCustomer;receiveAddress
+#  datasource:
+#    url: jdbc:tc:postgresql:13:///
+#    initialization-mode: always
+#  jpa:
+#    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+#    hibernate:
+#      ddl-auto: validate
+#      use-new-id-generator-mappings: false
+#    properties:
+#      hibernate:
+#        show_sql: true
+#        format_sql: true
+#      jdbc:
+#        time_zone: UTC
+#    show-sql: true
+#  liquibase:
+#    enabled: on
+#    drop-first: on
+#    default-schema: public
+#    change-log: classpath:/db/changelog/db.changelog-master.yaml
+#  kafka:
+#    bootstrap-servers: kafka-server:9092
+#  cloud:
+#    stream:
+#      bindings:
+#        receiveCustomer-in-0:
+#          destination: customers
+#          group: customerGroup
+#          contentType: application/json
+#        receiveAddress-in-0:
+#          destination: addresses
+#          group: addressGroup
+#          contentType: application/json
+#    function:
+#      definition: receiveCustomer;receiveAddress
