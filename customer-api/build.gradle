@@ -30,7 +30,7 @@ repositories {
 }
 
 ext {
-    set('springCloudVersion', "2020.0.2")
+    set('springCloudVersion', "2020.0.3")
     set('testcontainersVersion', "1.15.3")
 
     jacocoInstructionCoverageMinimum = 0.30
@@ -69,7 +69,6 @@ dependencies {
     integrationTestImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     integrationTestImplementation 'org.testcontainers:junit-jupiter'
-    integrationTestImplementation 'org.testcontainers:kafka'
     integrationTestImplementation 'org.testcontainers:postgresql'
 }
 

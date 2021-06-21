@@ -23,10 +23,13 @@
 
 - https://github.com/debezium/debezium-examples/blob/master/tutorial/docker-compose-postgres.yaml
 
+- https://medium.com/event-driven-utopia/a-visual-introduction-to-debezium-32563e23c6b8
 
 ### Kafka Connect (Debezium postgres connector)
 
 - https://debezium.io/documentation/reference/connectors/postgresql.html
+
+
 
 ### CDC
 

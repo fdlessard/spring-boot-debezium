@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.9'
 
 networks:
   customer-net:
@@ -19,6 +19,7 @@ services:
       WAIT_HOSTS: 'postgres:5432'
       SPRING_DATASOURCE_URL: 'jdbc:postgresql://postgres:5432/postgres'
     depends_on:
+      - kafka-connect
       - kafka-server
       - postgres-server
   customer-listener:
@@ -31,9 +32,6 @@ services:
       - customer-net
     ports:
       - 8081:8080
-#    environment:
-#      WAIT_HOSTS: 'postgres:5432'
-#      SPRING_DATASOURCE_URL: 'jdbc:postgresql://postgres:5432/postgres'
     depends_on:
       - customer-api
       - kafka-server
@@ -87,11 +85,6 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       ALLOW_PLAINTEXT_LISTENER: 'yes'
       ZOOKEEPER_CONNECT: 'zookeeper-server:2181'
-#      - 'LISTENERS=INTERNAL://:9092,EXTERNAL://:9093'
-#      - 'ADVERTISED_LISTENERS=INTERNAL://kafka:9092,EXTERNAL://localhost:9093'
-#      - 'KAFKA_INTER_BROKER_LISTENER_NAME=INTERNAL'
-#      - 'KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT'
-#      - 'ADVERTISED_HOST_NAME=localhost'
     depends_on:
       - zookeeper-server
   kafka-connect:
@@ -113,15 +106,16 @@ services:
       BOOTSTRAP_SERVERS: 'kafka-server:9092'
       CONFIG_STORAGE_TOPIC: my-connect-configs
       OFFSET_STORAGE_TOPIC: my-connect-offsets
-      STATUS_STORAGE_TOPIC: my_source_connect_statuses
+#      STATUS_STORAGE_TOPIC: my_source_connect_statuses
+#      CONFIG_STORAGE_REPLICATION_FACTOR: 1
+#      OFFSET_STORAGE_REPLICATION_FACTOR: 1
+#      STATUS_STORAGE_REPLICATION_FACTOR: 1
       KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
       VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
       INTERNAL_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
       INTERNAL_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
-      CONFIG_STORAGE_REPLICATION_FACTOR: 1
-      OFFSET_STORAGE_REPLICATION_FACTOR: 1
-      STATUS_STORAGE_REPLICATION_FACTOR: 1
-#      - 'ADVERTISED_HOST_NAME=$$(echo $$DOCKER_HOST | cut -f3 -d’/’ | cut -f1 -d’:’)'
+      TOPIC_CREATION_ENABLE: 'true'
+#      LOG_CLEANUP_POLICY: compact
     depends_on:
       - postgres-server
       - zookeeper-server
