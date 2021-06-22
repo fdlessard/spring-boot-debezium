@@ -5,6 +5,7 @@ networks:
     name: customer-net
 
 services:
+
   customer-api:
     build:
       context: './customer-api/'
@@ -23,19 +24,21 @@ services:
       - kafka-server
       - postgres-server
     command: [--rm]
-#  cdc-listener:
-#    build:
-#      context: './cdc-listener/'
-#      dockerfile: Dockerfile
-#    image: 'cdc-listener:0.0.1-SNAPSHOT'
-#    container_name: cdc-listener
-#    networks:
-#      - customer-net
-#    ports:
-#      - 8081:8080
-#    depends_on:
-#      - customer-api
-#    command: [--rm]
+
+  cdc-listener:
+    build:
+      context: './cdc-listener/'
+      dockerfile: Dockerfile
+    image: 'cdc-listener:0.0.1-SNAPSHOT'
+    container_name: cdc-listener
+    networks:
+      - customer-net
+    ports:
+      - 8081:8080
+    depends_on:
+      - customer-api
+    command: [--rm]
+
   postgres-server:
     image: debezium/postgres:13-alpine
     container_name: customer-postgres
@@ -45,12 +48,12 @@ services:
     ports:
       - 5432:5432
     environment:
-      - 'POSTGRES_DB=postgres'
-      - 'POSTGRES_USER=postgres'
-      - 'POSTGRES_PASSWORD=secret'
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+
   zookeeper-server:
     image: debezium/zookeeper:1.5.2.Final
-    restart: unless-stopped
     container_name: customer-zookeeper
     hostname: zookeeper-server
     networks:
@@ -59,6 +62,7 @@ services:
       - 2181:2181
       - 2888:2888
       - 3888:3888
+
   kafka-server:
     image: debezium/kafka:1.5.2.Final
     container_name: customer-kafka
@@ -77,12 +81,10 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT'
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       ALLOW_PLAINTEXT_LISTENER: 'yes'
-      ADVERTISED_HOST_NAME: localhost
-      ADVERTISED_PORT: 9093
-      LOG_CLEANUP_POLICY: compact
       TOPIC_CREATION_DEFAULT_CLEANUP_POLICY: compact
     depends_on:
       - zookeeper-server
+
   connect-server:
     image: debezium/connect:1.5.2.Final
     container_name: customer-connect
@@ -100,20 +102,12 @@ services:
       CONFIG_STORAGE_TOPIC: my-connect-config-storage-topic
       OFFSET_STORAGE_TOPIC: my-connect-offset-storage-topic
       STATUS_STORAGE_TOPIC: my-connect-status-storage-topic
-#      CONNECT_TOPIC_CREATION_ENABLE: 'true'
-#      TOPIC_CREATION_DEFAULT_CLEANUP_POLICY: compact
-#      REST_ADVERTISED_HOST_NAME: connect-server
-#      KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
-#      VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
-#      INTERNAL_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
-#      INTERNAL_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
-#    depends_on:
-#      - postgres-server
-#      - kafka-server
-  watcher:
+      TOPIC_CREATION_DEFAULT_CLEANUP_POLICY: compact
+
+  customer-watcher:
     image: debezium/kafka:1.5.2.Final
     container_name: customer-watcher
-    hostname: watcher
+    hostname: customer-watcher
     networks:
       - customer-net
     links:
@@ -127,4 +121,25 @@ services:
     environment:
       KAFKA_BROKER: kafka-server:9092
       ZOOKEEPER_CONNECT: zookeeper-server:2181
+      TOPIC_CREATION_DEFAULT_CLEANUP_POLICY: compact
     command: [watch-topic, -a, -k, dbserver1.public.customer]
+
+  address-watcher:
+    image: debezium/kafka:1.5.2.Final
+    container_name: address-watcher
+    hostname: address-watcher
+    networks:
+      - customer-net
+    links:
+      - zookeeper-server
+      - kafka-server
+      - connect-server
+    depends_on:
+      - zookeeper-server
+      - kafka-server
+      - connect-server
+    environment:
+      KAFKA_BROKER: kafka-server:9092
+      ZOOKEEPER_CONNECT: zookeeper-server:2181
+      TOPIC_CREATION_DEFAULT_CLEANUP_POLICY: compact
+    command: [watch-topic, -a, -k, dbserver1.public.address]

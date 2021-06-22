@@ -14,7 +14,7 @@ logging:
   level.root: INFO
   #  level.org.hibernate.SQL: DEBUG
   level.liquibase: INFO
-  level.io.fdlessard.codebites.debezium: DEBUG
+  level.io.fdlessard.codebites.debezium.cdc.listener: DEBUG
 
 spring:
   application:
@@ -37,12 +37,12 @@ spring:
     stream:
       bindings:
         customerChange-in-0:
-          destination: 'dbserver1.public.customer'
-          group: listenerGroup
+          destination: dbserver1.public.customer
+          group: customerListenerGroup
           contentType: application/json
-        caddressChange-in-0:
-          destination: 'dbserver1.public.address'
-          group: listenerGroup
+        addressChange-in-0:
+          destination: dbserver1.public.address
+          group: addressListenerGroup
           contentType: application/json
     function:
-      definition: customerChange,addressChange
+      definition: customerChange;addressChange
