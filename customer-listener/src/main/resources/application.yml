@@ -37,8 +37,8 @@ spring:
     stream:
       bindings:
         receiveCustomer-in-0:
-          destination: my-connect-configs
-          group: cdcGroup
+          destination: 'postgres.public.customer'
+          group: customerListenerGroup
           contentType: application/json
     function:
       definition: receiveCustomer

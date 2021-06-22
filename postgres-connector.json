@@ -9,10 +9,7 @@
     "database.password": "secret",
     "database.dbname" : "postgres",
     "database.server.name": "dbserver1",
-    "database.history.kafka.bootstrap.servers": "kafka-server:9092",
-    "database.history.kafka.topic": "schema-changes.public",
-    "database.include.list": "postgres",
-    "table.include.list": "public.customer,public.address",
-    "plugin.name": "wal2json"
+    "schema.include": "public",
+    "table.exclude.list": "public.databasechangelog,public.databasechangeloglock"
   }
 }

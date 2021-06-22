@@ -29,7 +29,7 @@
 
 - https://debezium.io/documentation/reference/connectors/postgresql.html
 
-
+https://debezium.io/blog/2020/09/15/debezium-auto-create-topics/
 
 ### CDC
 
