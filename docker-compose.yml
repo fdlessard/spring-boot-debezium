@@ -23,12 +23,12 @@ services:
       - kafka-server
       - postgres-server
     command: [--rm]
-#  customer-listener:
+#  cdc-listener:
 #    build:
-#      context: './customer-listener/'
+#      context: './cdc-listener/'
 #      dockerfile: Dockerfile
-#    image: 'customer-listener:0.0.1-SNAPSHOT'
-#    container_name: customer-listener
+#    image: 'cdc-listener:0.0.1-SNAPSHOT'
+#    container_name: cdc-listener
 #    networks:
 #      - customer-net
 #    ports:

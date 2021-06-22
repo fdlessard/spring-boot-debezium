@@ -1,0 +1,48 @@
+server:
+  port: 8081
+
+management:
+  info:
+    git:
+      mode: full
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+logging:
+  level.root: INFO
+  #  level.org.hibernate.SQL: DEBUG
+  level.liquibase: INFO
+  level.io.fdlessard.codebites.debezium: DEBUG
+
+spring:
+  application:
+    name: cdc-listener
+  output:
+    ansi:
+      enabled: always
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  jackson:
+    default-property-inclusion: non_null
+    time-zone: UTC
+    serialization:
+      write_dates_as_timestamps: false
+  kafka:
+    bootstrap-servers: kafka-server:9092
+  cloud:
+    stream:
+      bindings:
+        customerChange-in-0:
+          destination: 'dbserver1.public.customer'
+          group: listenerGroup
+          contentType: application/json
+        caddressChange-in-0:
+          destination: 'dbserver1.public.address'
+          group: listenerGroup
+          contentType: application/json
+    function:
+      definition: customerChange,addressChange
