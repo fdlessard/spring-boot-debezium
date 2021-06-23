@@ -6,225 +6,235 @@
 	},
 	"item": [
 		{
-			"name": "Customers",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Customer API",
+			"item": [
+				{
+					"name": "Customers",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/customers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"customers"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:8080/customers",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"customers"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Addresses",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "Customer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"lastName\": \"last-name-post-2\",\r\n    \"firstName\": \"first-name-post-2\",\r\n    \"company\": \"company-2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/customers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"customers"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:8080/addresses",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"addresses"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Customer",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"lastName\": \"last-name-post-2\",\r\n    \"firstName\": \"first-name-post-2\",\r\n    \"company\": \"company-2\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "Addresses",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/addresses",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"addresses"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:8080/customers",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"customers"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Address",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"customerId\": 2,\r\n    \"number\": \"2\",\r\n    \"street\": \"street-post\",\r\n    \"city\": \"city-post\",\r\n    \"postalCode\": \"postal-code-post\",\r\n    \"province\": \"province-post\",\r\n    \"country\": \"country-post\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "Address",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customerId\": 2,\r\n    \"number\": \"2\",\r\n    \"street\": \"street-post\",\r\n    \"city\": \"city-post\",\r\n    \"postalCode\": \"postal-code-post\",\r\n    \"province\": \"province-post\",\r\n    \"country\": \"country-post\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/addresses",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"addresses"
+							]
 						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/addresses",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"addresses"
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Kakka Connect",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8083",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8083"
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Kakka Connect - Connectors",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8083/connectors",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8083",
-					"path": [
-						"connectors"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Kakka Connect - Connectors",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"customer-connector\",\r\n    \"config\": {\r\n        \"connector.class\": \"io.debezium.connector.postgresql.PostgresConnector\",\r\n        \"tasks.max\": \"1\",\r\n        \"database.hostname\": \"postgres\",\r\n        \"database.port\": \"5432\",\r\n        \"database.user\": \"postgres\",\r\n        \"database.password\": \"secret\",\r\n        \"database.dbname\": \"postgres\",\r\n        \"database.server.name\": \"dbserver1\",\r\n        \"schema.include\": \"public\",\r\n        \"table.exclude.list\": \"public.databasechangelog,public.databasechangeloglock\"\r\n    }\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "CDC Listener - Kafka Connect",
+			"item": [
+				{
+					"name": "Kakka Connect",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8083",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8083"
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:8083/connectors",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8083",
-					"path": [
-						"connectors"
-					]
+				{
+					"name": "Kakka Connect - Connectors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8083/connectors",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"connectors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Kakka Connect - Connectors",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"customer-api-connector\",\r\n    \"config\": {\r\n        \"connector.class\": \"io.debezium.connector.postgresql.PostgresConnector\",\r\n        \"tasks.max\": \"1\",\r\n        \"database.hostname\": \"postgres\",\r\n        \"database.port\": \"5432\",\r\n        \"database.user\": \"postgres\",\r\n        \"database.password\": \"secret\",\r\n        \"database.dbname\": \"postgres\",\r\n        \"database.server.name\": \"dbserver1\",\r\n        \"schema.include\": \"public\",\r\n        \"table.exclude.list\": \"public.databasechangelog,public.databasechangeloglock\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8083/connectors",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"connectors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Kakka Connect - Connectors - customer-api-connector",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8083/connectors/customer-connector",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"connectors",
+								"customer-connector"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Kakka Connect - Connectors - customer-api-connector",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8083/connectors/customer-api-connector",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"connectors",
+								"customer-api-connector"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
-		},
-		{
-			"name": "Kakka Connect - Connectors - customer-connector",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8083/connectors/customer-connector",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8083",
-					"path": [
-						"connectors",
-						"customer-connector"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Kakka Connect - Connectors - customer-connector",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8083/connectors/customer-connector",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8083",
-					"path": [
-						"connectors",
-						"customer-connector"
-					]
-				}
-			},
-			"response": []
+			]
 		}
 	]
 }
