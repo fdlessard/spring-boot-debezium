@@ -15,7 +15,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"lastName\": \"last-name-post\",\r\n    \"firstName\": \"first-name-post\",\r\n    \"company\": \"company-1\"\r\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -37,13 +37,44 @@
 			"response": []
 		},
 		{
+			"name": "Addresses",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/addresses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"addresses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Customer",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"lastName\": \"last-name-post\",\r\n    \"firstName\": \"first-name-post\",\r\n    \"company\": \"company-1\"\r\n}",
+					"raw": "{\r\n    \"lastName\": \"last-name-post-2\",\r\n    \"firstName\": \"first-name-post-2\",\r\n    \"company\": \"company-2\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -59,6 +90,34 @@
 					"port": "8080",
 					"path": [
 						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Address",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customerId\": 2,\r\n    \"number\": \"2\",\r\n    \"street\": \"street-post\",\r\n    \"city\": \"city-post\",\r\n    \"postalCode\": \"postal-code-post\",\r\n    \"province\": \"province-post\",\r\n    \"country\": \"country-post\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/addresses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"addresses"
 					]
 				}
 			},
@@ -106,7 +165,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"name\": \"customer-connector\",\r\n  \"config\": {\r\n    \"connector.class\": \"io.debezium.connector.postgresql.PostgresConnector\",\r\n    \"tasks.max\": \"1\",\r\n    \"database.hostname\": \"postgres\",\r\n    \"database.port\": \"5432\",\r\n    \"database.user\": \"postgres\",\r\n    \"database.password\": \"secret\",\r\n    \"database.dbname\" : \"postgres\",\r\n    \"table.include.list\": \"public\",\r\n    \"database.server.name\": \"dbserver1\",\r\n    \"database.history.kafka.bootstrap.servers\": \"kafka-server:9092\",\r\n    \"database.history.kafka.topic\": \"schema-changes.public\"\r\n  }\r\n}",
+					"raw": "{\r\n    \"name\": \"customer-connector\",\r\n    \"config\": {\r\n        \"connector.class\": \"io.debezium.connector.postgresql.PostgresConnector\",\r\n        \"tasks.max\": \"1\",\r\n        \"database.hostname\": \"postgres\",\r\n        \"database.port\": \"5432\",\r\n        \"database.user\": \"postgres\",\r\n        \"database.password\": \"secret\",\r\n        \"database.dbname\": \"postgres\",\r\n        \"database.server.name\": \"dbserver1\",\r\n        \"schema.include\": \"public\",\r\n        \"table.exclude.list\": \"public.databasechangelog,public.databasechangeloglock\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

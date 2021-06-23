@@ -13,11 +13,11 @@ management:
 logging:
   level.root: INFO
   level.liquibase: INFO
-  level.io.fdlessard.codebites.debezium: DEBUG
+  level.io.fdlessard.codebites.debezium.customer.api: DEBUG
 
 spring:
   application:
-    name: customer-api-application
+    name: customer-api
   output:
     ansi:
       enabled: always
@@ -30,13 +30,15 @@ spring:
     time-zone: UTC
     serialization:
       write_dates_as_timestamps: false
+  sql:
+    init:
+      platform: postgres
+      mode: never
   datasource:
     username: ${POSTGRES_USER:postgres}
     password: ${POSTGRES_PASSWORD:secret}
-    platform: postgres
     driverClassName: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/postgres
-    initialization-mode: never
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL10Dialect
     hibernate:

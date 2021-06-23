@@ -11,9 +11,9 @@ management:
         include: "*"
 
 logging:
-  level.root: INFO
-  #  level.org.hibernate.SQL: DEBUG
-  level.liquibase: INFO
+  level.root: info
+  level.org.hibernate.SQL: info
+  level.liquibase: info
   level.io.fdlessard.codebites.debezium.cdc.listener: DEBUG
 
 spring:
@@ -40,9 +40,11 @@ spring:
           destination: dbserver1.public.customer
           group: customerListenerGroup
           contentType: application/json
+
         addressChange-in-0:
           destination: dbserver1.public.address
           group: addressListenerGroup
           contentType: application/json
+
     function:
       definition: customerChange;addressChange

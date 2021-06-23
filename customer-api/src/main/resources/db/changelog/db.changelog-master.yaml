@@ -18,8 +18,7 @@ databaseChangeLog:
             tableName: address
             columns:
               - column: {name: id, type: bigserial, constraints: {primaryKey: true, nullable: false}}
-#              - column: {name: customer_id, type: bigint, constraints: {nullable: false}}              - column: {name: customer_id, type: bigint, constraints: {nullable: false}}
-              - column: {name: customer_id, type: bigint}
+              - column: {name: customer_id, type: bigint, constraints: {nullable: false}}
               - column: {name: version, type: int, defaultValueNumeric: 0, constraints: {nullable: false}}
               - column: {name: number, type: varchar(50)}
               - column: {name: street, type: varchar(50)}
