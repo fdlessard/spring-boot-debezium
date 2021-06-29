@@ -33,6 +33,11 @@
 
 - https://stackoverflow.com/questions/66384583/unable-to-deserialise-dynamic-json-with-jackson-using-generics
 
+
+### Confluent
+
+- https://rmoff.net/2020/06/19/how-to-install-connector-plugins-in-kafka-connect/
+
 ### Notes
 
 

@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8084
 
 management:
   info:
@@ -32,7 +32,9 @@ spring:
     serialization:
       write_dates_as_timestamps: false
   kafka:
-    bootstrap-servers: kafka-server:9092
+    bootstrap-servers: kafka-server:29092
+#    bootstrap-servers: kafka-server:9092
+
   cloud:
     stream:
       bindings:

@@ -46,7 +46,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"lastName\": \"last-name-post-2\",\r\n    \"firstName\": \"first-name-post-2\",\r\n    \"company\": \"company-2\"\r\n}",
+							"raw": "{\r\n    \"lastName\": \"last-name-post\",\r\n    \"firstName\": \"first-name-post\",\r\n    \"company\": \"company-post\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -105,7 +105,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"customerId\": 2,\r\n    \"number\": \"2\",\r\n    \"street\": \"street-post\",\r\n    \"city\": \"city-post\",\r\n    \"postalCode\": \"postal-code-post\",\r\n    \"province\": \"province-post\",\r\n    \"country\": \"country-post\"\r\n}",
+							"raw": "{\r\n    \"customerId\": 2,\r\n    \"number\": \"2-post\",\r\n    \"street\": \"street-post\",\r\n    \"city\": \"city-post\",\r\n    \"postalCode\": \"postal-code-post\",\r\n    \"province\": \"province-post\",\r\n    \"country\": \"country-post\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -173,7 +173,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"customer-api-connector\",\r\n    \"config\": {\r\n        \"connector.class\": \"io.debezium.connector.postgresql.PostgresConnector\",\r\n        \"tasks.max\": \"1\",\r\n        \"database.hostname\": \"postgres\",\r\n        \"database.port\": \"5432\",\r\n        \"database.user\": \"postgres\",\r\n        \"database.password\": \"secret\",\r\n        \"database.dbname\": \"postgres\",\r\n        \"database.server.name\": \"dbserver1\",\r\n        \"schema.include\": \"public\",\r\n        \"table.exclude.list\": \"public.databasechangelog,public.databasechangeloglock\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"name\": \"customer-api-connector\",\r\n    \"config\": {\r\n        \"connector.class\": \"io.debezium.connector.postgresql.PostgresConnector\",\r\n        \"tasks.max\": \"1\",\r\n        \"database.hostname\": \"postgres-server\",\r\n        \"database.port\": \"5432\",\r\n        \"database.user\": \"postgres\",\r\n        \"database.password\": \"secret\",\r\n        \"database.dbname\": \"postgres\",\r\n        \"database.server.name\": \"dbserver1\",\r\n        \"schema.include\": \"public\",\r\n        \"table.exclude.list\": \"public.databasechangelog,public.databasechangeloglock\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -200,7 +200,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8083/connectors/customer-connector",
+							"raw": "http://localhost:8083/connectors/customer-api-connector",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -208,7 +208,7 @@
 							"port": "8083",
 							"path": [
 								"connectors",
-								"customer-connector"
+								"customer-api-connector"
 							]
 						}
 					},
