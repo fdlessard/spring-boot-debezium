@@ -38,6 +38,11 @@
 
 - https://rmoff.net/2020/06/19/how-to-install-connector-plugins-in-kafka-connect/
 
+
+### Debezium postgres aws
+https://github.com/fatihmehmetkose/debezium-aws-rds-config-scripts
+
+
 ### Notes
 
 
