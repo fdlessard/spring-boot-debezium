@@ -1,0 +1,19 @@
+logging:
+  level.root: INFO
+  level.io.fdlessard.codebites.debezium.lambda: DEBUG
+
+spring:
+  application:
+    name: lambda-cdc-listener
+  output:
+    ansi:
+      enabled: always
+  sql:
+    init:
+      platform: postgres
+      mode: never
+  datasource:
+    username: postgres
+    password: S3cr3tP4ssword
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://customer-db.cvrjvujzafcc.ca-central-1.rds.amazonaws.com:5432/postgres
