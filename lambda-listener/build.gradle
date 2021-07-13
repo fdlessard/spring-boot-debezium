@@ -28,6 +28,14 @@ ext {
 assemble.dependsOn = [shadowJar, thinJar]
 import com.github.jengelman.gradle.plugins.shadow.transformers.*
 
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'o.fdlessard.codebites.debezium.lambda.LambdaListenerApplication'
+    }
+}
+
+
 shadowJar {
     archiveClassifier = 'aws'
     dependencies {

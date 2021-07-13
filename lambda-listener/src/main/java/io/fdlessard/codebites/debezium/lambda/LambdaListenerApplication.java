@@ -1,4 +1,4 @@
-package io.fdlessard.codebites.listener;
+package io.fdlessard.codebites.debezium.lambda;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package io.fdlessard.codebites.listener;
+package io.fdlessard.codebites.debezium.lambda;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
