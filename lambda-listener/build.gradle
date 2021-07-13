@@ -1,0 +1,74 @@
+plugins {
+    id 'org.springframework.boot' version '2.5.2'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+    id 'org.springframework.boot.experimental.thin-launcher' version '1.0.27.RELEASE'
+    id 'com.github.johnrengelman.shadow' version '6.1.0'
+}
+
+group = 'io.fdlessard.codebites.debezium'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    set('springCloudVersion', "2020.0.3")
+    set('springCloudFunctionVersion', "2020.0.3")
+}
+
+assemble.dependsOn = [shadowJar, thinJar]
+import com.github.jengelman.gradle.plugins.shadow.transformers.*
+
+shadowJar {
+    archiveClassifier = 'aws'
+    dependencies {
+        exclude(
+                dependency('org.springframework.cloud:spring-cloud-function-web'))
+    }
+    // Required for Spring
+    mergeServiceFiles()
+    append 'META-INF/spring.handlers'
+    append 'META-INF/spring.schemas'
+    append 'META-INF/spring.tooling'
+    transform(PropertiesFileTransformer) {
+        paths = ['META-INF/spring.factories']
+        mergeStrategy = "append"
+    }
+}
+
+dependencies {
+
+    implementation 'org.springframework.boot:spring-boot-starter'
+
+    implementation 'org.springframework.cloud:spring-cloud-starter-function-web'
+    implementation 'org.springframework.cloud:spring-cloud-function-context'
+
+    implementation 'org.springframework.cloud:spring-cloud-function-adapter-aws'
+
+    implementation 'com.amazonaws:aws-lambda-java-core:1.2.1'
+    implementation 'com.amazonaws:aws-lambda-java-events:3.9.0'
+    runtimeOnly 'com.amazonaws:aws-lambda-java-log4j2:1.2.0'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+test {
+    useJUnitPlatform()
+}

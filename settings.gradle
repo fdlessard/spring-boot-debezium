@@ -1,4 +1,6 @@
 rootProject.name = 'spring-boot-debezium'
+
 include 'customer-api'
 include 'postgres-cdc-listener'
 include 'postgres-debezium-cdc-listener'
+include 'lambda-listener'
