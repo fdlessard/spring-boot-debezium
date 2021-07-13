@@ -26,6 +26,7 @@ services:
     command: [--rm]
 
   postgres-server:
+
     image: debezium/postgres:13-alpine
     container_name: postgres-server
     hostname: postgres-server

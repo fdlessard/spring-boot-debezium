@@ -34,6 +34,15 @@ databaseChangeLog:
             referencedTableName: customer
             referencedColumnNames: id
 
+        - createTable:
+            tableName: client
+            columns:
+              - column: {name: id, type: bigserial, constraints: {primaryKey: true, nullable: false}}
+              - column: {name: version, type: int, defaultValueNumeric: 0, constraints: {nullable: false}}
+              - column: {name: first_name, type: varchar(50)}
+              - column: {name: last_name, type: varchar(50)}
+              - column: {name: company, type: varchar(50)}
+
 
   - include:
       file: "db/data/db.data.yaml"

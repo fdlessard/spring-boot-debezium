@@ -31,7 +31,7 @@ import com.github.jengelman.gradle.plugins.shadow.transformers.*
 
 jar {
     manifest {
-        attributes 'Main-Class': 'o.fdlessard.codebites.debezium.lambda.LambdaListenerApplication'
+        attributes 'Main-Class': 'io.fdlessard.codebites.debezium.lambda.LambdaListenerApplication'
     }
 }
 
