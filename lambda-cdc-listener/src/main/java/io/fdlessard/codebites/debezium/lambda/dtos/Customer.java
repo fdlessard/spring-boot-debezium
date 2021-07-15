@@ -1,4 +1,4 @@
-package io.fdlessard.codebites.debezium.lambda.model;
+package io.fdlessard.codebites.debezium.lambda.dtos;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -15,7 +15,7 @@ import lombok.ToString;
 public class Customer implements Serializable {
 
   @JsonCreator
-  Customer(
+  public Customer(
       @JsonProperty("id") Long id,
       @JsonProperty("version") int version,
       @JsonProperty("first_name") String firstName,

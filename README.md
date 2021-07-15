@@ -40,7 +40,22 @@
 
 
 ### Debezium postgres aws
-https://github.com/fatihmehmetkose/debezium-aws-rds-config-scripts
+- https://github.com/fatihmehmetkose/debezium-aws-rds-config-scripts
+
+### kafka connect aws lambda
+
+- https://docs.confluent.io/kafka-connect-aws-lambda/current/overview.html
+- https://tech.ao.com/post/triggering-an-aws-lambda-with-kafka/
+
+
+### Debezium Postgres in Amazon AWS
+
+- https://github.com/fatihmehmetkose/debezium-aws-rds-config-scripts
+- https://debezium.io/blog/2020/02/25/lessons-learned-running-debezium-with-postgresql-on-rds/
+
+
+- https://rieckpil.de/java-aws-lambda-with-spring-cloud-function/
+- https://docs.spring.io/spring-cloud-function/docs/current/reference/html/aws.html
 
 
 ### Notes

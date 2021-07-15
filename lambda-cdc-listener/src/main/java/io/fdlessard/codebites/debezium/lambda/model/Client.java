@@ -1,44 +1,52 @@
 package io.fdlessard.codebites.debezium.lambda.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import java.io.Serializable;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.domain.Persistable;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-@Getter
-@Setter
-@ToString
-public class Client implements Serializable {
+@Table("client")
+@Data
+@NoArgsConstructor
+public class Client implements Persistable<Long> {
 
-  @JsonCreator
-  public Client(
-      @JsonProperty("id") Long id,
-      @JsonProperty("version") int version,
-      @JsonProperty("first_name") String firstName,
-      @JsonProperty("last_name") String lastName,
-      @JsonProperty("company") String company
-  ) {
-    this.id = id;
-    this.version = version;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.company = company;
-  }
+    @Id
+    @Column("id")
+    private Long id;
 
-  private Long id;
+    @Column("last_name")
+    private String lastName;
 
-  private int version;
+    @Column("first_name")
+    private String firstName;
 
-  @JsonProperty("last_name")
-  private String lastName;
+    @Column("company")
+    private String company;
 
-  @JsonProperty("first_name")
-  private String firstName;
+    @Transient
+    @JsonIgnore
+    private boolean newEntity;
 
-  private String company;
+    public Client(Long id, String lastName, String firstName, String company) {
+        this.id = id;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.company = company;
+    }
 
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isNew() {
+        return newEntity;
+    }
 }

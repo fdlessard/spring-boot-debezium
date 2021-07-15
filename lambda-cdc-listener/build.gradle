@@ -22,7 +22,6 @@ repositories {
 
 ext {
     set('springCloudVersion', "2020.0.3")
-    set('springCloudFunctionVersion', "2020.0.3")
 }
 
 assemble.dependsOn = [shadowJar, thinJar]
@@ -66,7 +65,6 @@ dependencies {
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 
     runtimeOnly 'org.postgresql:postgresql'
-
 
     implementation 'com.amazonaws:aws-lambda-java-core:1.2.1'
     implementation 'com.amazonaws:aws-lambda-java-events:3.9.0'
